@@ -7,7 +7,9 @@
     <title>Rigobot Bubble</title>
   </head>
   <body style="height: 300vh">
-    <h1 id="chat-grow">s</h1>
+    <h1 id="chat-grow">Rigobot Bubble Demo</h1>
+
+    <!-- Rigobot Bubble Buttons -->
     <button onclick="moveRigo()">Move RIgo</button>
     <button onclick="askRigobot()">Ask Rigobot</button>
     <button onclick="completeRigobot()">Complete Rigobot</button>
@@ -21,9 +23,13 @@
     <button onclick="stopLearnpackAgent()">Stop Agent (v2 learnpack)</button>
     <button onclick="changeBgColor()">Change Background Color</button>
     <input type="color" id="colorPicker" value="#ffffff" style="margin-left: 10px;" />
+
+    <!-- Chat Target Element -->
     <div id="chat-target">
-      <h1>An H1 in the target</h1>
+      <h1>Chat target element</h1>
     </div>
+
+    <!-- Agent Chat -->
     <div id="agent-messages" style="margin: 20px; padding: 10px; border: 1px solid #ccc; min-height: 100px; background-color: #f5f5f5; max-width: 600px;">
       <h3>Agent Chat</h3>
       <div id="agent-content" style="height: 300px; overflow-y: auto; margin-bottom: 10px; padding: 10px; background-color: #fff; border: 1px solid #ddd; border-radius: 5px;"></div>
@@ -48,7 +54,7 @@
       style="position: absolute; top: 3000px; right: 50%"
       id="bottom-element"
     >
-      asdasd
+      Bottom element
     </div>
     <script type="module" src="/src/main.tsx"></script>
 
@@ -363,8 +369,7 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         if (window.rigo) {
-          // window.rigo.init("248b53865d6743519ef55b4ec65772a7", {
-          window.rigo.init("4ce70b0f716543c3a97a9078e79ba785", {
+          window.rigo.init("your-rigobot-chat-agent-hash", { // VITE_RIGOBOT_CHAT_AGENT_HASH
             loglevel: "debug",
             purposeSlug: "4geekscom-public-agent",
             completions: [
@@ -374,14 +379,11 @@
                 DOMTarget: "#chat-grow",
               },
             ],
-            // socketHost: "http://127.0.0.1:8003",
-
-            // socketHost: "http://127.0.0.1:8003",
             context: "The user is called: Lulú",
             user: {
-              token: "your-api-host-token",
+              token: "your-rigobot-host-token", // VITE_RIGOBOT_TOKEN
             },
-            apiHost: "your-api-host",
+            apiHost: "your-rigobot-host", // VITE_RIGOBOT_HOST
           });
 
           window.rigo.show({

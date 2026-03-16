@@ -209,7 +209,7 @@ window.rigo = {
     }
 
     let temporalSocket = io(
-      this.options?.socketHost ?? "https://ai.4geeks.com", 
+      this.options?.socketHost ?? import.meta.env.VITE_SOCKET_HOST, 
       {
         autoConnect: true,
         transports: ["websocket", "polling"],
@@ -319,7 +319,7 @@ window.rigo = {
     }
 
     let temporalSocket = io(
-      this.options?.socketHost ?? "https://ai.4geeks.com",
+      this.options?.socketHost ?? import.meta.env.VITE_SOCKET_HOST,
       {
         autoConnect: true,
         transports: ["websocket", "polling"],
@@ -402,7 +402,7 @@ window.rigo = {
       return { stop: () => {}, run: () => {} };
     }
 
-    const apiHost = (this.options?.apiHost ?? "https://rigobot.herokuapp.com").replace(/\/+$/, "");
+    const apiHost = (this.options?.apiHost ?? import.meta.env.VITE_RIGOBOT_HOST).replace(/\/+$/, "");
 
     // This endpoint requires an authenticated user token (Authorization: Token ...)
     const userToken = this.options?.user?.token ?? this.token;
@@ -682,7 +682,7 @@ window.rigo = {
 
       return;
     }
-    const websocketHost = this.options?.socketHost ?? "https://ai.4geeks.com";
+    const websocketHost = this.options?.socketHost ?? import.meta.env.VITE_SOCKET_HOST;
 
     console.log("Connecting to socket", websocketHost);
 
@@ -828,7 +828,7 @@ window.rigo = {
       return;
     }
 
-    const apiHost = import.meta.env.VITE_API_HOST;
+    const apiHost = import.meta.env.VITE_RIGOBOT_HOST;
     const soketiKey = import.meta.env.VITE_SOKETI_KEY;
     const soketiHost = import.meta.env.VITE_SOKETI_HOST;
     const soketiPort = import.meta.env.VITE_SOKETI_PORT;

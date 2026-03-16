@@ -94,11 +94,11 @@ export const Rigobot: React.FC<RigobotProps> = ({ chatAgentHash, options }) => {
         avatar: currentOptions.user?.avatar || "",
         nickname: currentOptions.user?.nickname || "User",
       }}
-      socketHost={currentOptions.socketHost || "https://ai.4geeks.com"}
+      socketHost={currentOptions.socketHost || import.meta.env.VITE_SOCKET_HOST}
       welcomeMessage={
         currentOptions.welcomeMessage || "Hi! How can I help you! 👋"
       }
-      host="https://rigobot.herokuapp.com"
+      host={import.meta.env.VITE_RIGOBOT_HOST}
       purposeId={
         currentOptions.purposeId ? currentOptions.purposeId : undefined
       }
