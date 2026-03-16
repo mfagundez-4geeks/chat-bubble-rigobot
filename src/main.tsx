@@ -54,7 +54,7 @@ async function loadPusher(): Promise<PusherConstructor> {
     }
 
     const script = document.createElement("script");
-    script.src = "https://js.pusher.com/8.4.0/pusher.min.js";
+    script.src = "https://js.pusher.com/7.6.0/pusher.min.js";
     script.async = true;
     script.dataset.rigo = "pusher";
 
@@ -414,10 +414,11 @@ window.rigo = {
       return { stop: () => {}, run: () => {} };
     }
 
-    const pusherKey = this.options?.pusherKey;
-    const pusherCluster = this.options?.pusherCluster;
-    if (!pusherKey || !pusherCluster) {
-      const error = "Missing Pusher config. Provide options.pusherKey and options.pusherCluster";
+    const soketiKey = import.meta.env.VITE_SOKETI_KEY;
+    const soketiHost = import.meta.env.VITE_SOKETI_HOST;
+    const soketiPort = import.meta.env.VITE_SOKETI_PORT;
+    if (!soketiKey || !soketiHost || !soketiPort) {
+      const error = "Missing Soketi config. Provide VITE_SOKETI_KEY, VITE_SOKETI_HOST and VITE_SOKETI_PORT";
       logger.error(error);
       onEvent?.({ type: "error", data: { error, m: error } });
       onComplete?.(false, { error });
@@ -534,7 +535,14 @@ window.rigo = {
           if (isStopped) return;
 
           const Pusher = await loadPusher();
-          pusher = new Pusher(pusherKey, { cluster: pusherCluster });
+          pusher = new Pusher(soketiKey,  {
+            wsHost: soketiHost,
+            wsPort: soketiPort,
+            forceTLS: true,
+            encrypted: true,
+            disableStats: true,
+            enabledTransports: ["ws", "wss"],
+          });
           channel = pusher.subscribe(`agent-run-${runId}`);
 
           channel.bind("tool-call", (ev: any) => {
@@ -820,9 +828,10 @@ window.rigo = {
       return;
     }
 
-    const apiHost = this.options?.apiHost ?? "https://rigobot.herokuapp.com";
-    const pusherKey = this.options?.pusherKey ?? "609743b48b8ed073d67f";
-    const pusherCluster = this.options?.pusherCluster ?? "us2";
+    const apiHost = import.meta.env.VITE_API_HOST;
+    const soketiKey = import.meta.env.VITE_SOKETI_KEY;
+    const soketiHost = import.meta.env.VITE_SOKETI_HOST;
+    const soketiPort = import.meta.env.VITE_SOKETI_PORT;
 
     let pusherClient: any = null;
     let channel: any = null;
@@ -892,8 +901,13 @@ window.rigo = {
 
           const PusherLib = await loadPusher();
 
-          pusherClient = new PusherLib(pusherKey, {
-            cluster: pusherCluster,
+          pusherClient = new PusherLib(soketiKey,  {
+            wsHost: soketiHost,
+            wsPort: soketiPort,
+            forceTLS: true,
+            encrypted: true,
+            disableStats: true,
+            enabledTransports: ["ws", "wss"],
           });
 
           const channelName = `completion-job-${jobId}`;
