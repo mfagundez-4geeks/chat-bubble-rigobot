@@ -1,5 +1,5 @@
 {
-  "name": "rigo-ai",
+  "name": "@learnpack/rigo-ai",
   "version": "0.1.23",
   "type": "module",
   "private": false,
